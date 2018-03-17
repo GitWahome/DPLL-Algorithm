@@ -23,7 +23,7 @@ class Literal:
         if self.value:
             return self.name
         else:
-            return str("( not "+self.name+")")
+            return str(" not "+self.name+"")
 """
 I used this function to count the number of literals in the KB(Disregarding the negative sign) so
 as to generate a sensible number of models in the generator. 
@@ -55,7 +55,7 @@ def CNFGenerator(KB):
     sCNF = " and ".join(outer)
     return sCNF
 
-def Dpll_Satisfiable(KB):
+def DPLL_SatisfiableBrute(KB):
     """
     In here are all possible true, false and none(which is equivalent to free for me) for the stated number
     of literals. I will test the solutions iteratively and if one of them returns true, I will terminate the
@@ -74,6 +74,7 @@ def Dpll_Satisfiable(KB):
     -After doing this, I go through the generated sCNF replacing the symbol with the equivalent truth value.
     -Remember the use of not? This is where it comes in handy. I don't have to worry about the negatives since
     they were covered.
+    -Please not, I did not do a bruteforce on this. I evaluated the individual CNFs parsin.
     """
     for potential in possibleSolutions:
         valuesDictionary = dict(zip(KBLiterals, potential))
@@ -96,16 +97,27 @@ def Dpll_Satisfiable(KB):
 
 
 
+
+
 A = Literal('A')
 B = Literal('B')
 C = Literal('C')
 D = Literal('D')
+E = Literal('E')
+F = Literal('F')
+G = Literal('G')
 
+#Test Cases
+KB1=[{A},{-A}]
+KB2 = [{A, B},{A, -C},{-A, B, D}]
+KB3 = [{A, B},{-A, -B},{C, D, E}]
+KB4 = [{A, B},{-C, -C},{-D, E, F}]
+KB5 = [{A, A},{-A, -A},{B, B},{-B,-B},{C,C},{-C,-C}]
+KB6 = [{A, C},{F, -G},{-E, F, D}]
 
+#From Assignment
 KB = [{A, B},{A, -C},{-A, B, D}]
-KB1=[{A},{-A}]
-(satisfiable, model) = Dpll_Satisfiable(KB1)
-KB = [{A, B},{A, -C},{-A, B, D}]
-KB1=[{A},{-A}]
+TestKB=KB #Paste KB here or paste up with a number and assign to this.
+(satisfiable, model) = DPLL_SatisfiableBrute(TestKB)
 print("\nThe KB {} is satisfiable: {}."
-      "\nAn example of a satisfactory model is: {}".format(KB, satisfiable,model))
+      "\nAn example of a satisfactory model is: {}".format(TestKB, satisfiable,model))
