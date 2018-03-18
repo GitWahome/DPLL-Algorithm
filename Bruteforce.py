@@ -1,5 +1,5 @@
 """
--As prompted, I created a Literal class that will hold within it the Literal used in our clauses.
+-I created a Literal class that will hold within it the Literal used in our clauses.
 -The neg returns another instance of Literal that is not self because negative Literals have a False sign
 and redeclaration would falsify the positive version which would mess things up.
 -I have a repr method to print out the literal in question together with the sign.
